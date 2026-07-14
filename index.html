@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chilli Zone Café — Beer Kaji, Phoolpur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@600;700&family=JetBrains+Mono:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --char:#140d0a;
+    --char-2:#1c130f;
+    --ember:#c81d25;
+    --ember-2:#8f1319;
+    --flame:#ff7a1a;
+    --gold:#f2a93b;
+    --gold-soft:#e8c27a;
+    --paper:#f6ecdd;
+    --paper-dim:#d9c9ae;
+    --leaf:#3d6b3a;
+    --line: rgba(242,169,59,0.25);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--char);
+    color:var(--paper);
+    font-family:'Poppins',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Anton',sans-serif; letter-spacing:0.02em; margin:0;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 20px;}
+
+  /* ---------- top strip ---------- */
+  .topstrip{
+    background:var(--ember-2);
+    color:var(--paper);
+    font-size:0.78rem;
+    padding:7px 0;
+    text-align:center;
+    letter-spacing:0.03em;
+    border-bottom:1px solid rgba(0,0,0,0.25);
+  }
+  .topstrip b{color:var(--gold);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+    padding:60px 20px 100px;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(200,29,37,0.35), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 15% 15%, rgba(255,122,26,0.12), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 85% 10%, rgba(255,122,26,0.10), transparent 70%),
+      var(--char);
+  }
+  .ember-particle{
+    position:absolute;
+    bottom:-10px;
+    width:5px; height:5px;
+    border-radius:50%;
+    background:var(--flame);
+    box-shadow:0 0 8px 2px rgba(255,122,26,0.8);
+    opacity:0;
+    animation:rise linear infinite;
+  }
+  @keyframes rise{
+    0%{transform:translateY(0) translateX(0); opacity:0;}
+    10%{opacity:0.9;}
+    90%{opacity:0.4;}
+    100%{transform:translateY(-100vh) translateX(var(--drift,20px)); opacity:0;}
+  }
+  .badge-ring{
+    position:relative;
+    width:118px; height:118px;
+    border-radius:50%;
+    border:3px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px;
+    background:radial-gradient(circle at 50% 35%, #2a1c14, #140d0a 75%);
+    box-shadow:0 0 0 6px rgba(242,169,59,0.08), 0 0 40px rgba(255,122,26,0.25);
+  }
+  .badge-ring .crown{font-size:1.9rem; filter:drop-shadow(0 0 6px rgba(242,169,59,0.6));}
+  .badge-orbit{
+    position:absolute;
+    inset:-26px;
+    border:1px dashed rgba(242,169,59,0.35);
+    border-radius:50%;
+  }
+  .since{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.62rem;
+    letter-spacing:0.35em;
+    color:var(--gold-soft);
+    margin-bottom:6px;
+    text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 8vw, 5.2rem);
+    line-height:0.95;
+    background:linear-gradient(180deg, #ffe6a8 0%, var(--gold) 45%, var(--flame) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 60px rgba(255,122,26,0.25);
+    max-width:16ch;
+  }
+  .tagline{
+    font-family:'Caveat',cursive;
+    font-size:1.5rem;
+    color:var(--paper-dim);
+    margin-top:10px;
+  }
+  .hero-meta{
+    margin-top:28px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    justify-content:center;
+  }
+  .pill{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,0.03);
+    padding:8px 16px;
+    border-radius:100px;
+    font-size:0.82rem;
+    color:var(--paper-dim);
+    display:flex; align-items:center; gap:6px;
+  }
+  .pill b{color:var(--gold);}
+  .pill.rating{color:var(--gold); border-color:rgba(242,169,59,0.4);}
+  .hero-ctas{
+    margin-top:34px;
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .btn{
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    padding:14px 28px;
+    border-radius:8px;
+    border:none;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{
+    background:linear-gradient(180deg, var(--flame), var(--ember));
+    color:#1a0d08;
+    box-shadow:0 8px 24px rgba(200,29,37,0.35);
+  }
+  .btn-ghost{
+    background:transparent;
+    border:1.5px solid var(--gold-soft);
+    color:var(--gold-soft);
+  }
+  .scroll-cue{
+    position:absolute;
+    bottom:26px;
+    font-size:0.7rem;
+    letter-spacing:0.25em;
+    color:var(--paper-dim);
+    text-transform:uppercase;
+    opacity:0.6;
+  }
+
+  /* ---------- category nav ---------- */
+  .catnav-outer{
+    position:sticky; top:0; z-index:30;
+    background:rgba(20,13,10,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .catnav{
+    display:flex;
+    gap:6px;
+    overflow-x:auto;
+    padding:12px 20px;
+    scrollbar-width:none;
+  }
+  .catnav::-webkit-scrollbar{display:none;}
+  .catnav button{
+    flex:0 0 auto;
+    background:transparent;
+    border:1px solid transparent;
+    color:var(--paper-dim);
+    font-family:'Poppins',sans-serif;
+    font-size:0.82rem;
+    font-weight:500;
+    padding:8px 14px;
+    border-radius:100px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:all 0.15s ease;
+  }
+  .catnav button.active{
+    background:var(--ember);
+    color:var(--paper);
+    border-color:var(--ember);
+  }
+  .catnav button:hover:not(.active){border-color:var(--line); color:var(--gold-soft);}
+
+  /* ---------- menu section ---------- */
+  .menu-section{padding:56px 0 120px;}
+  .menu-layout{
+    display:grid;
+    grid-template-columns:1fr 340px;
+    gap:40px;
+    align-items:start;
+  }
+  .menu-cols{min-width:0;}
+  .cat-block{margin-bottom:46px; scroll-margin-top:80px;}
+  .cat-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin-bottom:6px;
+    border-bottom:2px solid var(--ember);
+    padding-bottom:10px;
+  }
+  .cat-head h2{font-size:1.5rem; color:var(--paper);}
+  .cat-count{font-family:'JetBrains Mono',monospace; font-size:0.75rem; color:var(--gold-soft);}
+  .item-row{
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    gap:14px;
+    align-items:center;
+    padding:13px 0;
+    border-bottom:1px dashed rgba(242,169,59,0.15);
+  }
+  .item-name{font-size:0.98rem; color:var(--paper);}
+  .item-name .veg-dot{
+    display:inline-block; width:9px; height:9px; border:1.5px solid var(--leaf);
+    margin-right:8px; vertical-align:middle;
+  }
+  .item-name .veg-dot::after{content:''; display:block; width:4px; height:4px; margin:1.3px auto; border-radius:50%; background:var(--leaf);}
+  .price-col{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+    color:var(--gold-soft);
+    text-align:right;
+    min-width:56px;
+  }
+  .price-label{display:block; font-size:0.6rem; color:var(--paper-dim); letter-spacing:0.05em;}
+  .add-btn{
+    width:34px; height:34px;
+    border-radius:50%;
+    border:1.5px solid var(--gold);
+    background:transparent;
+    color:var(--gold);
+    font-size:1.1rem;
+    cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:all 0.15s ease;
+    line-height:1;
+  }
+  .add-btn:hover{background:var(--gold); color:#1a0d08;}
+  .add-btn:active{transform:scale(0.9);}
+  .item-actions{display:flex; gap:6px;}
+
+  /* ---------- order chit ---------- */
+  .chit-wrap{position:sticky; top:80px;}
+  .chit{
+    background:var(--paper);
+    color:#241a12;
+    border-radius:2px;
+    padding:26px 22px 22px;
+    position:relative;
+    box-shadow:0 20px 50px rgba(0,0,0,0.5);
+    background-image:
+      repeating-linear-gradient(rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 26px);
+  }
+  .chit::before{
+    content:'';
+    position:absolute; top:-1px; left:0; right:0; height:14px;
+    background:
+      radial-gradient(circle at 10px 0, transparent 7px, var(--char) 7.5px) repeat-x;
+    background-size:20px 14px;
+    transform:translateY(-1px);
+  }
+  .chit-head{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.7rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:#7a6a52;
+    display:flex; justify-content:space-between;
+    padding-bottom:10px;
+    border-bottom:1px dashed #c9b892;
+    margin-bottom:14px;
+  }
+  .chit-title{font-family:'Anton',sans-serif; font-size:1.3rem; color:var(--ember-2); margin-bottom:2px;}
+  .chit-items{min-height:60px; margin-bottom:14px;}
+  .chit-empty{font-size:0.85rem; color:#8a7a60; font-style:italic; padding:20px 0; text-align:center;}
+  .chit-row{
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:0.85rem; padding:7px 0; border-bottom:1px dotted #d6c7a8;
+    gap:8px;
+  }
+  .chit-row .cname{flex:1;}
+  .chit-row .cqty{
+    font-family:'JetBrains Mono',monospace;
+    display:flex; align-items:center; gap:6px;
+  }
+  .qty-btn{
+    width:20px; height:20px; border:1px solid #a99568; background:transparent;
+    color:#5a4a30; cursor:pointer; font-size:0.8rem; line-height:1; border-radius:3px;
+  }
+  .chit-total{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono',monospace;
+    font-size:1.05rem; font-weight:700;
+    border-top:2px solid var(--ember-2);
+    padding-top:12px; margin-top:6px;
+    color:var(--ember-2);
+  }
+  .chit-actions{display:flex; flex-direction:column; gap:10px; margin-top:18px;}
+  .chit-btn{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:13px; border-radius:6px; font-weight:600; font-size:0.9rem;
+    text-decoration:none; cursor:pointer; border:none;
+  }
+  .chit-btn.call{background:var(--ember); color:#fff;}
+  .chit-btn.wa{background:#3d6b3a; color:#fff;}
+  .chit-note{font-size:0.72rem; color:#8a7a60; text-align:center; margin-top:10px; line-height:1.4;}
+
+  /* mobile floating chit trigger */
+  .chit-fab{
+    display:none;
+    position:fixed; bottom:18px; left:50%; transform:translateX(-50%);
+    z-index:40;
+    background:var(--ember);
+    color:#fff;
+    padding:14px 22px;
+    border-radius:100px;
+    font-weight:600;
+    font-size:0.9rem;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    border:none;
+    align-items:center; gap:10px;
+  }
+  .chit-fab .count{
+    background:rgba(255,255,255,0.25);
+    border-radius:50%;
+    width:22px; height:22px;
+    font-size:0.75rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  @media (max-width:900px){
+    .menu-layout{grid-template-columns:1fr;}
+    .chit-wrap{
+      position:fixed; inset:auto 0 0 0; top:auto; z-index:50;
+      transform:translateY(105%);
+      transition:transform 0.3s ease;
+      max-height:80vh; overflow-y:auto;
+      border-radius:16px 16px 0 0;
+    }
+    .chit-wrap.open{transform:translateY(0);}
+    .chit{border-radius:16px 16px 0 0; padding-bottom:34px;}
+    .chit-fab{display:flex;}
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:40px 0 90px;
+    text-align:center;
+    color:var(--paper-dim);
+    font-size:0.85rem;
+  }
+  footer .fname{font-family:'Anton',sans-serif; color:var(--gold); font-size:1.4rem; margin-bottom:10px;}
+  footer a.flink{color:var(--gold-soft); text-decoration:underline;}
+  @media (max-width:900px){footer{padding-bottom:110px;}}
+
+  ::selection{background:var(--ember); color:#fff;}
+  @media (prefers-reduced-motion: reduce){
+    .ember-particle{animation:none; display:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topstrip">🔥 <b>Open now</b> · Kitchen closes 11 pm · Takeout ends 10 pm</div>
+
+<section class="hero" id="top">
+  <div id="embers"></div>
+  <div class="badge-ring">
+    <div class="badge-orbit"></div>
+    <span class="crown">👑</span>
+  </div>
+  <h1>Chilli Zone<br>Café</h1>
+  <div class="tagline">Bucz test matter 🌶️ — and we serve it.</div>
+
+  <div class="hero-meta">
+    <span class="pill rating">★ 4.9 <span style="opacity:0.7">· 13 reviews</span></span>
+    <span class="pill">📍 Beer Kaji, Phoolpur, UP 212402</span>
+    <span class="pill">🕚 Closes 11 pm</span>
+  </div>
+
+  <div class="hero-ctas">
+    <a href="#menu" class="btn btn-primary">See the menu</a>
+    <a href="tel:07905238461" class="btn btn-ghost">📞 Call to order</a>
+  </div>
+  <div class="scroll-cue">↓ scroll for the full menu</div>
+</section>
+
+<div class="catnav-outer">
+  <div class="catnav" id="catnav"></div>
+</div>
+
+<section class="menu-section wrap" id="menu">
+  <div class="menu-layout">
+    <div class="menu-cols" id="menuCols"></div>
+
+    <div class="chit-wrap" id="chitWrap">
+      <div class="chit">
+        <div class="chit-head">
+          <span>Order chit</span>
+          <span id="chitDate" class="mono"></span>
+        </div>
+        <div class="chit-title">Chilli Zone Café</div>
+        <div class="chit-items" id="chitItems">
+          <div class="chit-empty">Tap the ⊕ next to any dish to start your order.</div>
+        </div>
+        <div class="chit-total">
+          <span>Total</span>
+          <span id="chitTotal">₹0</span>
+        </div>
+        <div class="chit-actions">
+          <a class="chit-btn call" id="callBtn" href="tel:07905238461">📞 Call &amp; place order</a>
+          <a class="chit-btn wa" id="waBtn" href="#" target="_blank" rel="noopener">💬 Send on WhatsApp</a>
+        </div>
+        <div class="chit-note">This chit isn't billed automatically — it just makes it quick to read out or send your order to Chilli Zone Café.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<button class="chit-fab" id="chitFab">
+  🧾 View order <span class="count" id="fabCount">0</span>
+</button>
+
+<footer>
+  <div class="fname">Chilli Zone Café</div>
+  <div>Beer Kazi, near IFFCO, Phoolpur, Uttar Pradesh 212402</div>
+  <div style="margin-top:6px;">★ 4.9 · 13 reviews &nbsp;·&nbsp; <a class="flink" href="tel:07905238461">07905238461</a></div>
+  <div style="margin-top:16px; font-size:0.75rem; opacity:0.6;">Menu &amp; prices as displayed in-store · subject to change</div>
+</footer>
+
+<script>
+const MENU = [
+  {cat:"Noodles", items:[
+    {n:"Veg Noodles", half:50, full:90},
+    {n:"Schezwan Noodles", half:55, full:100},
+    {n:"Paneer Noodles", half:65, full:120, veg:true},
+  ]},
+  {cat:"Chinies", items:[
+    {n:"Chilli Potato", half:60, full:110, veg:true},
+    {n:"Chilli Paneer", half:80, full:140, veg:true},
+    {n:"Fried Rice", half:50, full:90},
+    {n:"Schezwan Fried Rice", half:55, full:95},
+    {n:"Paneer Fried Rice", half:70, full:120, veg:true},
+  ]},
+  {cat:"Pasta & Maggie", items:[
+    {n:"Macaroni", full:70},
+    {n:"White Sauce Pasta", half:60, full:120, veg:true},
+    {n:"Red Sauce Pasta", half:50, full:90, veg:true},
+    {n:"Plain Maggi", full:40},
+    {n:"Veggie Maggi", full:55},
+    {n:"Cheese Maggi", full:69, veg:true},
+    {n:"Cheese Corn Maggi", full:79, veg:true},
+  ]},
+  {cat:"Fry's", items:[
+    {n:"Plain French Fry", full:59},
+    {n:"Peri Peri Fry", full:90},
+    {n:"Cheese Fry", full:110, veg:true},
+  ]},
+  {cat:"Pizza", items:[
+    {n:"Margherita Pizza", full:99, veg:true},
+    {n:"Veggie Pizza", full:110, veg:true},
+    {n:"Golden Corn Pizza", full:130, veg:true},
+    {n:"Tandoori Pizza", full:129, veg:true},
+    {n:"Paneer Pizza", full:140, veg:true},
+    {n:"Paneer Tandoori Pizza", full:159, veg:true},
+    {n:"Paneer Corn Pizza", full:169, veg:true},
+    {n:"Extra Cheese", full:25, veg:true},
+  ]},
+  {cat:"Chill Zone", items:[
+    {n:"Cold Coffee", full:59, veg:true},
+    {n:"Cold Coffee with Ice Cream", full:69, veg:true},
+    {n:"Banana Shake", full:40, veg:true},
+    {n:"Chocolate Shake", full:50, veg:true},
+    {n:"Oreo Shake", full:60, veg:true},
+  ]},
+  {cat:"Mocktail", items:[
+    {n:"Lemon Soda", full:30, veg:true},
+    {n:"Virgin Mojito", full:59, veg:true},
+    {n:"Blue Lagoon", full:59, veg:true},
+    {n:"Water Melon Mojito", full:59, veg:true},
+    {n:"Sunset Mojito", full:59, veg:true},
+    {n:"Green Apple", full:59, veg:true},
+  ]},
+  {cat:"Burger", items:[
+    {n:"Aloo Tikki Burger (Veg)", full:50, veg:true},
+    {n:"Cheese Burger", full:65, veg:true},
+    {n:"Paneer Burger", full:70, veg:true},
+    {n:"Cheese Paneer Burger", full:80, veg:true},
+  ]},
+  {cat:"Sandwich", items:[
+    {n:"Veggie Sandwich", full:60, veg:true},
+    {n:"Cheese Sandwich", full:70, veg:true},
+    {n:"Paneer Sandwich", full:70, veg:true},
+    {n:"Cheese Corn Sandwich", full:80, veg:true},
+  ]},
+  {cat:"Corn's", items:[
+    {n:"Butter Corn", full:50, veg:true},
+    {n:"Butter Masala Corn", full:60, veg:true},
+    {n:"Crispy Corn", full:70, veg:true},
+    {n:"Peri Peri Twist", full:80, veg:true},
+  ]},
+  {cat:"Bake By Bite", items:[
+    {n:"Bun Makhan", full:30, veg:true},
+    {n:"Garlic Bread", full:40, veg:true},
+    {n:"Cheese Garlic Bread", full:50, veg:true},
+    {n:"Korean Bun", full:100, veg:true},
+  ]},
+  {cat:"Indian", items:[
+    {n:"Samosa (2 pcs)", full:18, veg:true},
+    {n:"Pav Bhaji", full:60, veg:true},
+    {n:"Chhole Bhature", full:80, veg:true},
+  ]},
+  {cat:"Tea & Coffee", items:[
+    {n:"Chai", full:15, veg:true},
+    {n:"Lemon Chai", full:15, veg:true},
+    {n:"CZC Special Lemon Tea", full:20, veg:true},
+    {n:"Café Latte", full:25, veg:true},
+    {n:"Cappuccino", full:25, veg:true},
+    {n:"Black Coffee", full:20, veg:true},
+  ]},
+];
+
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+const cart = {}; // key: "catIdx-itemIdx-portion" -> {name, portion, price, qty}
+
+function buildNav(){
+  const nav = document.getElementById('catnav');
+  MENU.forEach((c,i)=>{
+    const b = document.createElement('button');
+    b.textContent = c.cat;
+    b.dataset.target = 'cat-'+slug(c.cat);
+    if(i===0) b.classList.add('active');
+    b.onclick = ()=>{
+      document.getElementById(b.dataset.target).scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    nav.appendChild(b);
+  });
+}
+
+function priceCell(item, portion){
+  const val = portion==='half'? item.half : item.full;
+  if(val===undefined) return `<span class="price-col">—</span>`;
+  return `<span class="price-col">₹${val}<span class="price-label">${portion}</span></span>`;
+}
+
+function buildMenu(){
+  const cols = document.getElementById('menuCols');
+  MENU.forEach((c,ci)=>{
+    const block = document.createElement('div');
+    block.className = 'cat-block';
+    block.id = 'cat-'+slug(c.cat);
+    block.innerHTML = `<div class="cat-head"><h2>${c.cat}</h2><span class="cat-count">${c.items.length} items</span></div>`;
+    c.items.forEach((item,ii)=>{
+      const row = document.createElement('div');
+      row.className = 'item-row';
+      const vegDot = item.veg ? '<span class="veg-dot"></span>' : '';
+      let actions = '';
+      let priceDisplay = '';
+      if(item.half!==undefined){
+        priceDisplay = `<div style="display:flex;gap:14px;">${priceCell(item,'half')}${priceCell(item,'full')}</div>`;
+        actions = `<div class="item-actions">
+          <button class="add-btn" data-c="${ci}" data-i="${ii}" data-portion="half" title="Add half">H⊕</button>
+          <button class="add-btn" data-c="${ci}" data-i="${ii}" data-portion="full" title="Add full">F⊕</button>
+        </div>`;
+      } else {
+        priceDisplay = `<div>${priceCell(item,'full')}</div>`;
+        actions = `<div class="item-actions">
+          <button class="add-btn" data-c="${ci}" data-i="${ii}" data-portion="full" title="Add">⊕</button>
+        </div>`;
+      }
+      row.innerHTML = `<span class="item-name">${vegDot}${item.n}</span>${priceDisplay}${actions}`;
+      block.appendChild(row);
+    });
+    cols.appendChild(block);
+  });
+
+  cols.addEventListener('click', e=>{
+    const btn = e.target.closest('.add-btn');
+    if(!btn) return;
+    const ci = +btn.dataset.c, ii = +btn.dataset.i, portion = btn.dataset.portion;
+    const item = MENU[ci].items[ii];
+    const price = portion==='half' ? item.half : item.full;
+    const key = `${ci}-${ii}-${portion}`;
+    if(!cart[key]) cart[key] = {name:item.n, portion, price, qty:0};
+    cart[key].qty++;
+    renderChit();
+    pulseFab();
+  });
+}
+
+function renderChit(){
+  const itemsEl = document.getElementById('chitItems');
+  const totalEl = document.getElementById('chitTotal');
+  const fabCount = document.getElementById('fabCount');
+  const keys = Object.keys(cart).filter(k=>cart[k].qty>0);
+  if(keys.length===0){
+    itemsEl.innerHTML = `<div class="chit-empty">Tap the ⊕ next to any dish to start your order.</div>`;
+    totalEl.textContent = '₹0';
+    fabCount.textContent = '0';
+    updateLinks();
+    return;
+  }
+  let total = 0, count = 0;
+  itemsEl.innerHTML = keys.map(k=>{
+    const it = cart[k];
+    total += it.price * it.qty;
+    count += it.qty;
+    const label = it.portion==='half' ? ' (half)' : (it.portion==='full' && it.hasHalf? ' (full)':'');
+    return `<div class="chit-row" data-key="${k}">
+      <span class="cname">${it.name}${it.portion==='half'?' (half)':''}</span>
+      <span class="cqty">
+        <button class="qty-btn" data-act="dec" data-key="${k}">−</button>
+        ${it.qty}
+        <button class="qty-btn" data-act="inc" data-key="${k}">+</button>
+        <span style="min-width:44px;display:inline-block;text-align:right;">₹${it.price*it.qty}</span>
+      </span>
+    </div>`;
+  }).join('');
+  totalEl.textContent = '₹'+total;
+  fabCount.textContent = count;
+  updateLinks(total, keys);
+}
+
+document.getElementById('chitItems').addEventListener('click', e=>{
+  const btn = e.target.closest('.qty-btn');
+  if(!btn) return;
+  const key = btn.dataset.key;
+  if(btn.dataset.act==='inc') cart[key].qty++;
+  else cart[key].qty = Math.max(0, cart[key].qty-1);
+  renderChit();
+});
+
+function updateLinks(total, keys){
+  const waBtn = document.getElementById('waBtn');
+  if(!total || !keys || keys.length===0){
+    waBtn.href = "https://wa.me/917905238461?text=" + encodeURIComponent("Hi Chilli Zone Café, I'd like to place an order.");
+    return;
+  }
+  const lines = keys.map(k=>{
+    const it = cart[k];
+    return `${it.qty} x ${it.name}${it.portion==='half'?' (half)':''} - ₹${it.price*it.qty}`;
+  });
+  const msg = `Hi Chilli Zone Café, I'd like to order:\n` + lines.join('\n') + `\nTotal: ₹${total}`;
+  waBtn.href = "https://wa.me/917905238461?text=" + encodeURIComponent(msg);
+}
+
+function pulseFab(){
+  const fab = document.getElementById('chitFab');
+  fab.style.transform = 'translateX(-50%) scale(1.06)';
+  setTimeout(()=> fab.style.transform = 'translateX(-50%) scale(1)', 140);
+}
+
+document.getElementById('chitFab').addEventListener('click', ()=>{
+  document.getElementById('chitWrap').classList.toggle('open');
+});
+
+/* scroll spy */
+function setupSpy(){
+  const navButtons = [...document.querySelectorAll('#catnav button')];
+  const sections = MENU.map(c=>document.getElementById('cat-'+slug(c.cat)));
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const idx = sections.indexOf(entry.target);
+        navButtons.forEach(b=>b.classList.remove('active'));
+        if(navButtons[idx]){
+          navButtons[idx].classList.add('active');
+          navButtons[idx].scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+        }
+      }
+    });
+  }, {rootMargin:'-30% 0px -60% 0px'});
+  sections.forEach(s=> s && obs.observe(s));
+}
+
+/* embers */
+function buildEmbers(){
+  const host = document.getElementById('embers');
+  for(let i=0;i<22;i++){
+    const e = document.createElement('div');
+    e.className = 'ember-particle';
+    const left = Math.random()*100;
+    const dur = 6 + Math.random()*7;
+    const delay = Math.random()*10;
+    const drift = (Math.random()*40-20)+'px';
+    e.style.left = left+'%';
+    e.style.setProperty('--drift', drift);
+    e.style.animationDuration = dur+'s';
+    e.style.animationDelay = delay+'s';
+    host.appendChild(e);
+  }
+}
+
+document.getElementById('chitDate').textContent = new Date().toLocaleDateString('en-IN', {day:'2-digit', month:'short'});
+
+buildNav();
+buildMenu();
+renderChit();
+setupSpy();
+buildEmbers();
+</script>
+</body>
+</html>
